@@ -52,5 +52,59 @@ from langchain.llms import Ollama
 llm = Ollama(
     model="mistral",
 callback_manager=CallbackManager([StreamingStdOutCallbackHandler()]) #to stream output to stdout
+system="<system prompt here>"
 )
+```
+
+- Create agent's tool
+
+```python
+Number_of_results=3
+search=SerpAPIWrapper(
+  serpapi_api_key=os.getenv("SERPAPI-API-KEY"),
+  params= {
+    "engine": "google_scholar",
+    "google_domain": "google.com",
+    "gl": "us",
+    "hl": "en",
+    "num": Number_of_results},
+    )
+
+
+tools = [Tool(
+  name = "HelpfulSearch",
+  func=search.run,
+  description="Useful when you want to search for related or alternative medical solution",
+    )]
+```
+
+- Create an agent
+
+```python
+from langchain.chains.conversation.memory import (
+    ConversationBufferMemory,
+    ConversationBufferWindowMemory,
+)
+
+memory = ConversationBufferWindowMemory(
+                    memory_key="chat_history", return_messages=True
+                )
+
+
+sarufi_chat_agent = initialize_agent(
+    tools=tools,
+    llm=llm,
+    agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
+    memory=memory,
+    verbose=True,
+    max_iterations=3,
+    early_stopping_method='generate',
+    handle_parsing_errors=True,
+)
+```
+
+- Run the agent
+
+```python
+sarufi_chat_agent.run("What is IMCI?")
 ```
