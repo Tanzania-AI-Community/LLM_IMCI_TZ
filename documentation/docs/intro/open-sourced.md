@@ -70,13 +70,20 @@ search=SerpAPIWrapper(
     "num": Number_of_results},
     )
 
+def parse_serpi_output(query):
+    query= search.results(query)
+    results=json.dumps({ f"result {int(link.get('position'))+1}": { "title":link.get('title'), "link":link.get("link"), "summary": link.get("snippet"),"authors":link["publication_info"].get("summary")} 
+            for link in query.get("organic_results")})
+    return str(results)
 
 tools = [Tool(
   name = "HelpfulSearch",
-  func=search.run,
+  func=parse_serpi_output,
   description="Useful when you want to search for related or alternative medical solution",
     )]
 ```
+
+The custom tool function has to be created to help the LLM to ingest the output from the search engine. The function should take a query as an input and return a string.
 
 - Create an agent
 
@@ -108,3 +115,5 @@ sarufi_chat_agent = initialize_agent(
 ```python
 sarufi_chat_agent.run("What is IMCI?")
 ```
+
+## Observation

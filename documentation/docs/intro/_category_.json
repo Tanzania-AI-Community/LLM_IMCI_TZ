@@ -1,8 +1,8 @@
 {
-  "label": "Introduction",
+  "label": "Introduction-Guide",
   "position": 2,
   "link": {
     "type": "generated-index",
-    "description": "5 minutes to learn the most important Docusaurus concepts."
+    "description": "IMCI chatbot implementaation by Tanzania AI labs in collaboration with Kalebu Jordan"
   }
 }

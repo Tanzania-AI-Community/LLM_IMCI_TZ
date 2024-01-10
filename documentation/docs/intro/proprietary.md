@@ -82,7 +82,15 @@ Below is step wise code implementation of the chatbot.
 
     <TabItem value="serpiapi" label="Serpi API">
 
-    To use the serpi api, you need to create an account and get the [API key](https://serpapi.com/). Then add the API key to the .env file as shown below.
+    To use the serpi api, you need to create an account and get the [API key](https://serpapi.com/).
+
+    You will have to install `google-search-results` in activate virtual environment.
+
+    ```bash
+    pip3 install google-search-results
+    ```
+
+    Then add the API key to the .env file as shown below
 
     ```bash
     SERPI-API-KEY=<your-serpi-api-key>
@@ -257,3 +265,27 @@ Below is step wise code implementation of the chatbot.
 The chatbot was deployed on whatsapp using Sarufi platform. The platform allows you to deploy your chatbot on whatsapp without writing any code. For more guide on deployment, visit [Sarufi](https://sarufi.io/) and read on how to [deploy your chatbot on whatsapp](https://docs.sarufi.io/docs/tutorial-integration/integrate-with-whatsapp).
 
 You may deploy your chatbot on whatsapp using any other platform of your choice.
+
+## Conclusion
+
+The chatbot was able to perform the required tasks. The chatbot was able to return the links to the research papers and the summary of the papers. The chatbot was able to return the correct links to the research papers and the summary of the papers for about 83% of the questions.
+
+![Valid vs Broken links](/img/valid-vs-broken-links.png)
+
+Taking a deep look at broken links, we found that the links were actually valid as we did try to search via google scholar and the results found were actually containing the same links. The links seemed broken as they required subscription to the journal to view the full paper. The links were not broken but the papers were not free to view.
+
+Example:
+
+Question asked: `Can you explain the danger signs of severe malaria in children?`
+Text response:
+
+```text
+1. The study titled 'Danger signs and management of suspected severe malaria cases at community level and in referral health facilities: An operational study in the Democratic Republic' discusses the distribution of signs and symptoms, including danger signs among children under 5 years enrolled with an iCCM episode of malaria.  https://www.medrxiv.org/content/10.1101/2021.11.30.21267082.abstract 
+
+2. 'African children with malaria in an area of intense Plasmodium falciparum transmission: features on admission to the hospital and risk factors for death.' This study mentions that common manifestations of severe malaria in children include cerebral malaria and severe anemia.  https://www.academia.edu/download/49829937/African_children_with_malaria_in_an_area20161024-23840-1hnme0l.pdf 
+
+3. The study 'Early home-based recognition of anaemia via general danger signs, in young children, in a malaria endemic community in north-east Tanzania' provides insights into the recognition of anemia, a significant risk factor for child mortality in areas with intense malaria transmission.  https://malariajournal.biomedcentral.com/articles/10.1186/1475-2875-5-111
+```
+
+Image of the search results from google scholar.
+![Illustration of what seems as broken link](/img/broken-link-example-1.png)
